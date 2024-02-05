@@ -49,3 +49,22 @@ class ArticleView(APIView):
         serializer.save()
         return Response(serializer.data)
 
+class DetailedArticleView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            article = Article.objects.get(id=kwargs['pk'])
+            serializer = ArticleModelSerializer(article)
+            return Response(serializer.data)
+        except:
+            return JsonResponse({'error': 'No matching article'})
+        
+    def put(self, request, *args, **kwargs):
+        try:
+            article = Article.objects.get(id=kwargs['pk'])
+            serializer = ArticleModelSerializer(article, request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+            return Response(serializer.data)
+        except: 
+            return JsonResponse({'error': 'No matching article'})
+        

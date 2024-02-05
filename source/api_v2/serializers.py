@@ -40,3 +40,5 @@ class ArticleModelSerializer(serializers.ModelSerializer):
         if len(title) < 8:
             raise ValidationError("Title must be at least 8 characters")
         return title
+    
+
