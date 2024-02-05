@@ -68,3 +68,12 @@ class DetailedArticleView(APIView):
         except: 
             return JsonResponse({'error': 'No matching article'})
         
+    def delete(self, request, *args, **kwargs):
+        try:
+            pk = kwargs['pk']
+            article = Article.objects.get(id=pk)
+            article.delete()
+            return Response({'deleted id': pk}, status=status.HTTP_204_NO_CONTENT)
+        except:
+            return JsonResponse({'error': 'No matching article'})
+
